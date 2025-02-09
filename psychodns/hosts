@@ -1,3 +1,3 @@
 192.168.200.2 psychodns.test
-192.168.200.3 psychostorage.test
-192.168.200.3 minio.psychostorage.test api.minio.psychostorage.test 
+192.168.200.3 psychostorage.test minio.psychostorage.test api.minio.psychostorage.test
+192.168.200.4 pgsql.psychostorage.test

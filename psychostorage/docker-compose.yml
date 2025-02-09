@@ -18,13 +18,31 @@ services:
     restart: unless-stopped
     env_file: ./minio.env
     volumes:
-      - ./minio-data:/data
+      - minio-psychostorage:/data
     networks:
       - psychostorage
     command: minio server --address 0.0.0.0:9000 --console-address ":9001" /data
+
+  pgsql-psychostorage:
+    depends_on:
+      - psychostorage
+    image: postgres:17.2
+    container_name: pgsql-psychostorage
+    restart: unless-stopped
+    env_file: ./pgsql.env
+    volumes:
+      - pgsql-psychostorage:/var/lib/postgresql/data
+    networks:
+      psychostorage:
+      psychosis:
+          ipv4_address: 192.168.200.4
       
 networks:
   psychostorage:
     name: psychostorage
   psychosis:
     external: true
+
+volumes:
+  minio-psychostorage:
+  pgsql-psychostorage:
