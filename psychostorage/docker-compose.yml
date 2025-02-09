@@ -1,0 +1,30 @@
+services:
+  psychostorage:
+    image: caddy:2.9.1
+    container_name: psychostorage
+    restart: unless-stopped
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+    networks:
+      psychostorage:
+      psychosis:
+          ipv4_address: 192.168.200.3
+
+  minio-psychostorage:
+    depends_on:
+      - psychostorage
+    image: minio/minio
+    container_name: minio-psychostorage
+    restart: unless-stopped
+    env_file: ./minio.env
+    volumes:
+      - ./minio-data:/data
+    networks:
+      - psychostorage
+    command: minio server --address 0.0.0.0:9000 --console-address ":9001" /data
+      
+networks:
+  psychostorage:
+    name: psychostorage
+  psychosis:
+    external: true
