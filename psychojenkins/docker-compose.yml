@@ -1,0 +1,17 @@
+services:
+  psychojenkins:
+    image: jenkins/jenkins:lts-jdk17
+    container_name: psychojenkins
+    restart: unless-stopped
+    networks:
+      - psychosis
+    volumes:
+      - jenkins:/var/jenkins_home
+    command: ["--httpPort=80"]
+      
+networks:
+  psychosis:
+    external: true
+
+volumes:
+  jenkins:
