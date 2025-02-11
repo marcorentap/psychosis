@@ -1,0 +1,18 @@
+services:
+  psychokube:
+    image: rancher/k3s:v1.24.10-k3s1
+    container_name: psychokube
+    restart: unless-stopped
+    privileged: true
+    networks:
+      psychosis:
+    volumes:
+      - psychokube:/var/lib/rancher/k3s
+    command: ["server", "--bind-address=psychokube.test"]
+      
+networks:
+  psychosis:
+    external: true
+
+volumes:
+  psychokube:
